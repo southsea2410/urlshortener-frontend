@@ -9,8 +9,8 @@ async function createUrl(url: UrlNoId) {
   return res.data as string;
 }
 
-export default function useCreateUrl(
-  opts?: UseMutationOptions<string, Error, UrlNoId>
+export default function useShortenUrl(
+  opts?: UseMutationOptions<string, Error, UrlNoId>,
 ) {
   return useMutation({
     mutationFn: createUrl,

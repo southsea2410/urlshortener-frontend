@@ -9,7 +9,6 @@ RUN bun install
 
 COPY . .
 
-COPY stack.env ./.env
 RUN bun run build
 
 # Stage 2: Serve the Vite app with nginx

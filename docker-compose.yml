@@ -1,0 +1,5 @@
+services:
+  urlshortener-frontend:
+    image: haina2410/urlshortener-frontend:latest
+    ports:
+      - "4001:80"

@@ -3,7 +3,7 @@ export type Url = {
   longUrl: string;
   password?: string;
   alias?: string;
-  createdAt: string;
+  createdAt?: string;
   expiry?: string;
 };
 
