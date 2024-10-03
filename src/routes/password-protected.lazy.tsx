@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import { baseBackendUrl } from '@/services/apis'
 import { createLazyFileRoute } from '@tanstack/react-router'
 
-export const Route = createLazyFileRoute('/password_protected/')({
+export const Route = createLazyFileRoute('/password-protected')({
   component: PasswordProtected,
 })
 

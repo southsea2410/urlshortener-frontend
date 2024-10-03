@@ -1,12 +1,11 @@
-import { EllipsisVertical, ExternalLink, PieChart } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { ExternalLink, PieChart } from "lucide-react";
+import { useMemo } from "react";
 
 import Header from "@/components/molecules/Header";
 import ReactTable from "@/components/molecules/ReactTable";
 import { Button } from "@/components/ui/button";
-import { readAliasesFromLocalstorage } from "@/hooks/utils";
 import { baseBackendUrl } from "@/services/apis";
-import { LocalStorageAliases, Url } from "@/services/types";
+import { Url } from "@/services/types";
 import useGetShortenedUrls from "@/services/useGetShortenedUrls";
 import useAliasStore from "@/store/useUrlStore";
 import { createFileRoute } from "@tanstack/react-router";
@@ -97,12 +96,14 @@ export default function MyUrls() {
           align: "center",
         },
         size: 100,
-        cell() {
+        cell(props) {
           return (
             <div className="w-full">
               <div className="mx-auto w-fit">
-                <Button size="icon" variant="ghost">
-                  <PieChart />
+                <Button size="icon" variant="ghost" asChild>
+                  <a href={"/analytics/" + props.row.original.alias}>
+                    <PieChart />
+                  </a>
                 </Button>
               </div>
             </div>
