@@ -1,27 +1,27 @@
-import axios, { Axios, AxiosError } from 'axios'
-import { useEffect, useState } from 'react'
+import axios, { Axios, AxiosError } from "axios";
+import { useEffect, useState } from "react";
 
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { baseBackendUrl } from '@/services/apis'
-import { createLazyFileRoute } from '@tanstack/react-router'
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { baseBackendUrl } from "@/services/apis";
+import { createLazyFileRoute } from "@tanstack/react-router";
 
-export const Route = createLazyFileRoute('/password-protected')({
+export const Route = createLazyFileRoute("/password-protected")({
   component: PasswordProtected,
-})
+});
 
 function PasswordProtected() {
-  const [alias, setAlias] = useState('')
+  const [alias, setAlias] = useState("");
 
   useEffect(() => {
-    const paramss = new URLSearchParams(window.location.search)
+    const paramss = new URLSearchParams(window.location.search);
 
-    setAlias(paramss.get('alias') || '')
-  }, [])
+    setAlias(paramss.get("alias") || "");
+  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    const data = new FormData(e.currentTarget)
-    const password = data.get('password') as string
+    const data = new FormData(e.currentTarget);
+    const password = data.get("password") as string;
 
     axios
       .get(baseBackendUrl + alias, {
@@ -30,9 +30,9 @@ function PasswordProtected() {
         },
       })
       .then((res) => {
-        console.log(res)
-      })
-  }
+        console.log(res);
+      });
+  };
 
   return (
     <div className="flex h-screen flex-col items-center justify-center gap-2">
@@ -46,5 +46,5 @@ function PasswordProtected() {
         <Button type="submit">Access</Button>
       </form>
     </div>
-  )
+  );
 }

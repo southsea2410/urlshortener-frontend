@@ -1,4 +1,9 @@
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+} from "lucide-react";
 import React from "react";
 
 import { Button } from "@/components/ui/button";
@@ -35,7 +40,10 @@ export default function ReactTablePagination({
   return (
     <div className="flex w-max items-center gap-3 self-end px-5 py-4 text-sm">
       Show:
-      <Select value={pageSize.toString()} onValueChange={(value) => setPageSize(Number(value))}>
+      <Select
+        value={pageSize.toString()}
+        onValueChange={(value) => setPageSize(Number(value))}
+      >
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Show" />
         </SelectTrigger>
@@ -51,7 +59,9 @@ export default function ReactTablePagination({
       <Input
         type="number"
         defaultValue={pageOffset + 1}
-        onChange={(e) => setPageIndex(e.target.value ? Number(e.target.value) - 1 : 0)}
+        onChange={(e) =>
+          setPageIndex(e.target.value ? Number(e.target.value) - 1 : 0)
+        }
         className="w-12"
         min={1}
       />
@@ -61,16 +71,32 @@ export default function ReactTablePagination({
           {pageOffset + 1} of {pageCount}
         </strong>
       </span>
-      <Button size="icon" onClick={() => setPageIndex(0)} disabled={!canPreviousPage}>
+      <Button
+        size="icon"
+        onClick={() => setPageIndex(0)}
+        disabled={!canPreviousPage}
+      >
         <ChevronsLeft />
       </Button>
-      <Button size="icon" onClick={() => setPageIndex(pageOffset - 1)} disabled={!canPreviousPage}>
+      <Button
+        size="icon"
+        onClick={() => setPageIndex(pageOffset - 1)}
+        disabled={!canPreviousPage}
+      >
         <ChevronLeft />
       </Button>
-      <Button size="icon" onClick={() => setPageIndex(pageOffset + 1)} disabled={!canNextPage}>
+      <Button
+        size="icon"
+        onClick={() => setPageIndex(pageOffset + 1)}
+        disabled={!canNextPage}
+      >
         <ChevronRight />
       </Button>
-      <Button size="icon" onClick={() => setPageIndex(pageCount - 1)} disabled={!canNextPage}>
+      <Button
+        size="icon"
+        onClick={() => setPageIndex(pageCount - 1)}
+        disabled={!canNextPage}
+      >
         <ChevronsRight />
       </Button>
     </div>

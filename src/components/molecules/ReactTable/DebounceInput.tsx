@@ -24,5 +24,11 @@ export default function DebouncedInput({
     return () => clearTimeout(timeout);
   }, [value, debounce, onChange]);
 
-  return <Input {...props} value={value} onChange={(e) => setValue(e.target.value)} />;
+  return (
+    <Input
+      {...props}
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+    />
+  );
 }
