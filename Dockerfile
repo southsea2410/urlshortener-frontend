@@ -9,7 +9,7 @@ RUN bun install
 
 COPY . .
 
-RUN bun run build
+RUN bun run build -m production
 
 # Stage 2: Serve the Vite app with nginx
 FROM nginx:alpine AS production-stage
