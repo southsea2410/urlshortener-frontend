@@ -5,7 +5,7 @@ import { httpClient } from "./httpClient";
 import { UrlNoId } from "./types";
 
 async function createUrl(url: UrlNoId) {
-  const res = await httpClient.post(apis.shortenUrl, url);
+  const res = await httpClient.post(apis.shortenUrl.create, url);
   return res.data as string;
 }
 

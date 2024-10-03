@@ -8,3 +8,7 @@ export type Url = {
 };
 
 export type UrlNoId = Omit<Url, "id">;
+
+export type LocalStorageAliases = {
+  aliases: string[];
+};

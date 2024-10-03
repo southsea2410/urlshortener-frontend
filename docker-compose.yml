@@ -3,3 +3,6 @@ services:
     image: haina2410/urlshortener-frontend:latest
     ports:
       - "4001:80"
+    restart: unless-stopped
+    env_file:
+      - stack.env

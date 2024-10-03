@@ -1,39 +1,34 @@
-import * as React from "react";
+import { lazy, Suspense } from "react";
 
 import { Toaster } from "@/components/ui/toaster";
-import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { createRootRoute, Outlet } from "@tanstack/react-router";
 
 export const Route = createRootRoute({
   component: RootComponent,
 });
 
 function RootComponent() {
+  const TanStackRouterDevtools =
+    import.meta.env.MODE === "production"
+      ? () => null // Render nothing in production
+      : lazy(() =>
+          // Lazy load in development
+          import("@tanstack/router-devtools").then((res) => ({
+            default: res.TanStackRouterDevtools,
+            // For Embedded Mode
+            // default: res.TanStackRouterDevtoolsPanel
+          })),
+        );
+
   return (
     <>
-      {/* <div className="p-2 flex gap-2 text-lg">
-        <Link
-          to="/"
-          activeProps={{
-            className: 'font-bold',
-          }}
-          activeOptions={{ exact: true }}
-        >
-          Home
-        </Link>{' '}
-        <Link
-          to="/about"
-          activeProps={{
-            className: 'font-bold',
-          }}
-        >
-          About
-        </Link>
-      </div>
-      <hr /> */}
       <Outlet />
       <Toaster />
-      <TanStackRouterDevtools position="bottom-right" />
+      <ReactQueryDevtools initialIsOpen={false} />
+      <Suspense>
+        <TanStackRouterDevtools position="bottom-left" />
+      </Suspense>
     </>
   );
 }

@@ -1,6 +1,11 @@
 import { Accordion, Button } from "flowbite-react";
 import React from "react";
 
+import { toast } from "@/hooks/use-toast";
+import { copyToClipboard } from "@/hooks/utils";
+import { baseBackendUrl } from "@/services/apis";
+import useAliasStore from "@/store/useUrlStore";
+import { ToastAction } from "@radix-ui/react-toast";
 import { createFileRoute } from "@tanstack/react-router";
 
 import Header from "../components/molecules/Header";
@@ -11,11 +16,31 @@ export const Route = createFileRoute("/")({
 });
 
 function HomeComponent() {
-  const { mutate: shortenUrl } = useShortenUrl();
+  const { addAlias } = useAliasStore();
+
+  const { mutate: shortenUrl } = useShortenUrl({
+    onSuccess(data, _, __) {
+      toast({
+        title: "Shortened successfully",
+        description: "Copy the link and share it with your friends",
+        action: (
+          <ToastAction
+            onClick={() => copyToClipboard(baseBackendUrl + data)}
+            altText="copy"
+          >
+            Copy
+          </ToastAction>
+        ),
+      });
+
+      addAlias(data);
+    },
+  });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
+    console.log(data.get("longUrl"));
 
     const longUrl = data.get("longUrl") as string;
     const alias = (data.get("alias") as string) || undefined;
@@ -31,18 +56,17 @@ function HomeComponent() {
   };
 
   return (
-    <main className="h-screen">
+    <main className="flex h-screen flex-col">
       <Header />
-      <div className="flex h-full flex-col items-center justify-center">
+      <hr />
+      <div className="flex grow flex-col items-center justify-center">
         <form
           className="flex w-[500px] flex-col rounded-lg pb-2 max-md:max-w-full"
           onSubmit={handleSubmit}
         >
           <div className="mb-3 flex w-full items-center rounded-lg border border-solid border-gray-700 px-6 py-6 shadow-[0px_4px_10px_rgba(0,0,0,0.1)] max-md:max-w-full max-md:px-5">
-            <label htmlFor="longUrl" className="sr-only">
-              Enter the link here
-            </label>
             <input
+              autoComplete="off"
               id="longUrl"
               name="longUrl"
               type="url"
@@ -56,10 +80,8 @@ function HomeComponent() {
               <Accordion.Title>Advanced Options</Accordion.Title>
               <Accordion.Content className="space-y-2.5">
                 <div>
-                  <label htmlFor="alias" className="sr-only">
-                    Alias
-                  </label>
                   <input
+                    autoComplete="off"
                     id="alias"
                     name="alias"
                     type="text"
@@ -68,9 +90,6 @@ function HomeComponent() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="password" className="sr-only">
-                    Password
-                  </label>
                   <input
                     id="password"
                     name="password"
@@ -80,9 +99,6 @@ function HomeComponent() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="expiry" className="sr-only">
-                    Expiry Date
-                  </label>
                   <input
                     id="expiry"
                     name="expiry"

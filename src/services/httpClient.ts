@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import { baseBackendUrl } from "./apis";
+
 export const httpClient = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_GATEWAY,
+  baseURL: baseBackendUrl,
 });

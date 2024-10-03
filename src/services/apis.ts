@@ -1,5 +1,9 @@
+export const baseBackendUrl = import.meta.env.VITE_BACKEND_GATEWAY;
 const apis = {
-  shortenUrl: "/shorten",
+  shortenUrl: {
+    create: "/shorten",
+    get: "/urls",
+  },
 };
 
 export default apis;

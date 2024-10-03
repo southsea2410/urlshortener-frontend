@@ -1,16 +1,33 @@
 import { create } from "zustand";
 
-type UrlState = {
-  shortenedUrls: string[];
-}
+import {
+  readAliasesFromLocalstorage,
+  writeAliasesToLocalstorage,
+} from "@/hooks/utils";
+import { LocalStorageAliases } from "@/services/types";
 
-type UrlAction = {
-  addUrl: (urlId: string) => void;
-  
-}
+type AliasActions = {
+  setAliases: (aliases: string[]) => void;
+  addAlias: (alias: string) => void;
+};
 
-const useBearStore = create((set) => ({
-  bears: 0,
-  increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
-  removeAllBears: () => set({ bears: 0 }),
+const useAliasStore = create<AliasActions & LocalStorageAliases>((set) => ({
+  aliases: readAliasesFromLocalstorage().aliases,
+
+  setAliases(aliases) {
+    set({ aliases });
+    writeAliasesToLocalstorage({ aliases });
+  },
+
+  addAlias(alias) {
+    set((state) => {
+      const newAliases = [...state.aliases, alias];
+
+      writeAliasesToLocalstorage({ aliases: newAliases });
+
+      return { aliases: newAliases };
+    });
+  },
 }));
+
+export default useAliasStore;
