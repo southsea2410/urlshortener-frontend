@@ -4,6 +4,7 @@ import useAliasStore from "@/store/useUrlStore";
 import { createFileRoute } from "@tanstack/react-router";
 import Header from "@/components/molecules/Header";
 import useColumnDef from "@/hooks/useColumnDef";
+import QRPopover from "@/components/molecules/QRDialog";
 
 export const Route = createFileRoute("/myurls")({
   component: MyUrls,
@@ -19,7 +20,7 @@ function MyUrls() {
     },
   );
 
-  const columns = useColumnDef();
+  const { columns, urlQr, openQr, setOpenQr } = useColumnDef();
 
   return (
     <main>
@@ -35,6 +36,7 @@ function MyUrls() {
           />
         )}
       </div>
+      <QRPopover url={urlQr} open={openQr} setOpen={setOpenQr} />
     </main>
   );
 }

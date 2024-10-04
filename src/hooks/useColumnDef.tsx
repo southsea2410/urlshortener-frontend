@@ -75,9 +75,12 @@ export default function useColumnDef() {
         accessorKey: "expiry",
         cell(props) {
           if (!props.getValue()) {
-            return <p>Never</p>;
+            return <p className="text-slate-400">Never</p>;
           }
           const date = new Date(props.getValue());
+          if (date < new Date()) {
+            return <p className="text-red-600">{date.toDateString()}</p>;
+          }
           return <p>{date.toDateString()}</p>;
         },
       },

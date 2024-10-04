@@ -11,8 +11,6 @@ name: Docker CI with Bun and Nginx
 on:
   push:
     branches: ["main"]
-  pull_request:
-    branches: ["main"]
 
 jobs:
   build:

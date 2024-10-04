@@ -15,7 +15,6 @@ export default function MetabaseFrame({
 
   return /*#__PURE__*/ createElement("iframe", {
     src: metabase_url,
-    csp: "*",
     className: "absolute top-0 bottom-0 right-0 left-0 size-full",
   });
 }
