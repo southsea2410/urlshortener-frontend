@@ -1,4 +1,4 @@
-import AnalyticsHeader from "@/components/molecules/AnalyticsHeader";
+import Header from "@/components/molecules/Header";
 import MetabaseFrame from "@/components/molecules/MetabaseFrame";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -11,7 +11,7 @@ function AliasAnalytics() {
 
   return (
     <main className="flex h-screen flex-col">
-      <AnalyticsHeader title="Analytics" />
+      <Header title="Analytics" />
       <hr />
       <div className="relative w-full grow px-8">
         {alias && (

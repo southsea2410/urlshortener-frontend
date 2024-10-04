@@ -8,11 +8,15 @@ const defaultProps = {
   className: "hover:border-b-2 hover:border-gray-300",
 };
 
-export default function Header() {
+type AnalyticsHeaderProps = {
+  title: string;
+};
+
+export default function Header({ title }: AnalyticsHeaderProps) {
   return (
     <header className="relative flex w-full items-center justify-between px-8 py-6 text-center max-md:mr-1 max-md:max-w-full">
       <h1 className="my-auto self-stretch text-4xl font-extrabold leading-none">
-        Nam URL Shortener
+        {title}
       </h1>
       <nav className="flex items-start gap-5 self-stretch">
         <Link to="/" {...defaultProps} activeProps={activeProps}>
@@ -20,6 +24,9 @@ export default function Header() {
         </Link>
         <Link to="/myurls" {...defaultProps} activeProps={activeProps}>
           My URLs
+        </Link>
+        <Link to="/allurls" {...defaultProps} activeProps={activeProps}>
+          All URLs
         </Link>
       </nav>
     </header>

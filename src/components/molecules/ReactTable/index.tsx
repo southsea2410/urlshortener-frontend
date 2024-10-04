@@ -19,6 +19,7 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  SortingState,
   Table,
   useReactTable,
 } from "@tanstack/react-table";
@@ -33,6 +34,7 @@ type ReactTableProps<T> = {
   columns: ColumnDef<T>[];
   filterOptions?: FilterOptions;
   globalSearch?: string;
+  sorting?: SortingState;
 };
 
 function TableHeadPopover<T>({ column }: { column: Column<T> }) {
@@ -206,6 +208,7 @@ export default function ReactTable<T extends object>({
   columns,
   filterOptions,
   globalSearch,
+  sorting,
 }: ReactTableProps<T>) {
   const table = useReactTable({
     data,
@@ -213,6 +216,7 @@ export default function ReactTable<T extends object>({
     columnResizeMode: "onChange",
     state: {
       globalFilter: globalSearch,
+      sorting,
     },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),

@@ -57,7 +57,7 @@ function HomeComponent() {
 
   return (
     <main className="flex h-screen flex-col">
-      <Header />
+      <Header title="Nam URL Shortener" />
       <hr />
       <div className="flex grow flex-col items-center justify-center">
         <form
@@ -73,6 +73,7 @@ function HomeComponent() {
               placeholder="Enter the link here"
               className="font-md flex-grow border-none bg-transparent text-xl font-light leading-snug text-gray-700 outline-none"
               aria-label="Enter the link here"
+              required
             />
           </div>
           <Accordion className="mb-3">
