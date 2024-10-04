@@ -1,6 +1,7 @@
 import { Accordion, Button } from "flowbite-react";
 import React from "react";
 
+import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 import { copyToClipboard } from "@/hooks/utils";
 import { baseBackendUrl } from "@/services/apis";
@@ -76,12 +77,12 @@ function HomeComponent() {
               required
             />
           </div>
-          <Accordion className="mb-3">
+          <Accordion className="mb-3" collapseAll={true}>
             <Accordion.Panel>
               <Accordion.Title>Advanced Options</Accordion.Title>
               <Accordion.Content className="space-y-2.5">
                 <div>
-                  <input
+                  <Input
                     autoComplete="off"
                     id="alias"
                     name="alias"
@@ -91,7 +92,7 @@ function HomeComponent() {
                   />
                 </div>
                 <div>
-                  <input
+                  <Input
                     id="password"
                     name="password"
                     type="password"
@@ -100,7 +101,7 @@ function HomeComponent() {
                   />
                 </div>
                 <div>
-                  <input
+                  <Input
                     id="expiry"
                     name="expiry"
                     type="date"
@@ -111,7 +112,9 @@ function HomeComponent() {
               </Accordion.Content>
             </Accordion.Panel>
           </Accordion>
-          <Button type="submit">Shorten Now!</Button>
+          <Button type="submit" size="lg">
+            Shorten Now!
+          </Button>
         </form>
         <div className="h-[200px]" />
       </div>
