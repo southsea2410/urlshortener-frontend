@@ -14,30 +14,30 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as MyurlsImport } from './routes/myurls'
-import { Route as AllurlsImport } from './routes/allurls'
 import { Route as IndexImport } from './routes/index'
 import { Route as AnalyticsAliasImport } from './routes/analytics.$alias'
 
 // Create Virtual Routes
 
-const PasswordProtectedLazyImport = createFileRoute('/password-protected')()
+const PasswordprotectedLazyImport = createFileRoute('/password_protected')()
+const AllurlsLazyImport = createFileRoute('/allurls')()
 
 // Create/Update Routes
 
-const PasswordProtectedLazyRoute = PasswordProtectedLazyImport.update({
-  path: '/password-protected',
+const PasswordprotectedLazyRoute = PasswordprotectedLazyImport.update({
+  path: '/password_protected',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
-  import('./routes/password-protected.lazy').then((d) => d.Route),
+  import('./routes/password_protected.lazy').then((d) => d.Route),
 )
+
+const AllurlsLazyRoute = AllurlsLazyImport.update({
+  path: '/allurls',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/allurls.lazy').then((d) => d.Route))
 
 const MyurlsRoute = MyurlsImport.update({
   path: '/myurls',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const AllurlsRoute = AllurlsImport.update({
-  path: '/allurls',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -62,13 +62,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/allurls': {
-      id: '/allurls'
-      path: '/allurls'
-      fullPath: '/allurls'
-      preLoaderRoute: typeof AllurlsImport
-      parentRoute: typeof rootRoute
-    }
     '/myurls': {
       id: '/myurls'
       path: '/myurls'
@@ -76,11 +69,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MyurlsImport
       parentRoute: typeof rootRoute
     }
-    '/password-protected': {
-      id: '/password-protected'
-      path: '/password-protected'
-      fullPath: '/password-protected'
-      preLoaderRoute: typeof PasswordProtectedLazyImport
+    '/allurls': {
+      id: '/allurls'
+      path: '/allurls'
+      fullPath: '/allurls'
+      preLoaderRoute: typeof AllurlsLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/password_protected': {
+      id: '/password_protected'
+      path: '/password_protected'
+      fullPath: '/password_protected'
+      preLoaderRoute: typeof PasswordprotectedLazyImport
       parentRoute: typeof rootRoute
     }
     '/analytics/$alias': {
@@ -97,26 +97,26 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/allurls': typeof AllurlsRoute
   '/myurls': typeof MyurlsRoute
-  '/password-protected': typeof PasswordProtectedLazyRoute
+  '/allurls': typeof AllurlsLazyRoute
+  '/password_protected': typeof PasswordprotectedLazyRoute
   '/analytics/$alias': typeof AnalyticsAliasRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/allurls': typeof AllurlsRoute
   '/myurls': typeof MyurlsRoute
-  '/password-protected': typeof PasswordProtectedLazyRoute
+  '/allurls': typeof AllurlsLazyRoute
+  '/password_protected': typeof PasswordprotectedLazyRoute
   '/analytics/$alias': typeof AnalyticsAliasRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/allurls': typeof AllurlsRoute
   '/myurls': typeof MyurlsRoute
-  '/password-protected': typeof PasswordProtectedLazyRoute
+  '/allurls': typeof AllurlsLazyRoute
+  '/password_protected': typeof PasswordprotectedLazyRoute
   '/analytics/$alias': typeof AnalyticsAliasRoute
 }
 
@@ -124,35 +124,35 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/allurls'
     | '/myurls'
-    | '/password-protected'
+    | '/allurls'
+    | '/password_protected'
     | '/analytics/$alias'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/allurls' | '/myurls' | '/password-protected' | '/analytics/$alias'
+  to: '/' | '/myurls' | '/allurls' | '/password_protected' | '/analytics/$alias'
   id:
     | '__root__'
     | '/'
-    | '/allurls'
     | '/myurls'
-    | '/password-protected'
+    | '/allurls'
+    | '/password_protected'
     | '/analytics/$alias'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AllurlsRoute: typeof AllurlsRoute
   MyurlsRoute: typeof MyurlsRoute
-  PasswordProtectedLazyRoute: typeof PasswordProtectedLazyRoute
+  AllurlsLazyRoute: typeof AllurlsLazyRoute
+  PasswordprotectedLazyRoute: typeof PasswordprotectedLazyRoute
   AnalyticsAliasRoute: typeof AnalyticsAliasRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AllurlsRoute: AllurlsRoute,
   MyurlsRoute: MyurlsRoute,
-  PasswordProtectedLazyRoute: PasswordProtectedLazyRoute,
+  AllurlsLazyRoute: AllurlsLazyRoute,
+  PasswordprotectedLazyRoute: PasswordprotectedLazyRoute,
   AnalyticsAliasRoute: AnalyticsAliasRoute,
 }
 
@@ -169,23 +169,23 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/allurls",
         "/myurls",
-        "/password-protected",
+        "/allurls",
+        "/password_protected",
         "/analytics/$alias"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/allurls": {
-      "filePath": "allurls.tsx"
-    },
     "/myurls": {
       "filePath": "myurls.tsx"
     },
-    "/password-protected": {
-      "filePath": "password-protected.lazy.tsx"
+    "/allurls": {
+      "filePath": "allurls.lazy.tsx"
+    },
+    "/password_protected": {
+      "filePath": "password_protected.lazy.tsx"
     },
     "/analytics/$alias": {
       "filePath": "analytics.$alias.tsx"
