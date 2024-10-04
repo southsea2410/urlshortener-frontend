@@ -3,6 +3,8 @@ import ReactTable from "@/components/molecules/ReactTable";
 import { createFileRoute } from "@tanstack/react-router";
 import useGetAllShortenedUrls from "@/services/useGetAllShortenedUrls";
 import useColumnDef from "@/hooks/useColumnDef";
+import { useState } from "react";
+import QRPopover from "@/components/molecules/QRDialog";
 
 export const Route = createFileRoute("/allurls")({
   component: AllUrls,
@@ -11,7 +13,7 @@ export const Route = createFileRoute("/allurls")({
 function AllUrls() {
   const { data: allUrls, ...fetchProps } = useGetAllShortenedUrls();
 
-  const columns = useColumnDef();
+  const { columns, urlQr, openQr, setOpenQr } = useColumnDef();
 
   return (
     <main>
@@ -27,6 +29,7 @@ function AllUrls() {
           />
         )}
       </div>
+      <QRPopover url={urlQr} open={openQr} setOpen={setOpenQr} />
     </main>
   );
 }

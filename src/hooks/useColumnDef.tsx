@@ -1,5 +1,5 @@
-import { ExternalLink, PieChart } from "lucide-react";
-import { useMemo } from "react";
+import { ExternalLink, PieChart, ScanQrCode } from "lucide-react";
+import { useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { baseBackendUrl } from "@/services/apis";
@@ -7,15 +7,19 @@ import { Url } from "@/services/types";
 import { ColumnDef } from "@tanstack/react-table";
 
 export default function useColumnDef() {
+  const [openQr, setOpenQr] = useState(false);
+  const [urlQr, setUrlQr] = useState("");
+
   const columns = useMemo<ColumnDef<Url, any>[]>(
     () => [
       {
         header: "Long URL",
-        size: 300,
+        size: 400,
         accessorKey: "longUrl",
       },
       {
         header: "Alias",
+        size: 300,
         accessorKey: "alias",
         cell(props) {
           return (
@@ -32,9 +36,18 @@ export default function useColumnDef() {
       },
       {
         header: "QR code",
-        cell: () => (
+        cell: (props) => (
           <div>
-            <a>Show</a>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => {
+                setOpenQr(true);
+                setUrlQr(baseBackendUrl + props.row.original.alias);
+              }}
+            >
+              <ScanQrCode className="mr-2" /> Show
+            </Button>
           </div>
         ),
       },
@@ -91,5 +104,11 @@ export default function useColumnDef() {
     ],
     [],
   );
-  return columns;
+  return {
+    columns,
+    openQr,
+    setOpenQr,
+    urlQr,
+    setUrlQr,
+  };
 }
