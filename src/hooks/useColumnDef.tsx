@@ -1,4 +1,9 @@
-import { ExternalLink, PieChart, ScanQrCode } from "lucide-react";
+import {
+  ClipboardCopy,
+  ExternalLink,
+  PieChart,
+  ScanQrCode,
+} from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -6,9 +11,20 @@ import { baseBackendUrl } from "@/services/apis";
 import { Url } from "@/services/types";
 import { ColumnDef } from "@tanstack/react-table";
 
+import { toast } from "./use-toast";
+import { copyToClipboard } from "./utils";
+
 export default function useColumnDef() {
   const [openQr, setOpenQr] = useState(false);
   const [urlQr, setUrlQr] = useState("");
+
+  const handleCopyLink = (alias: string) => {
+    copyToClipboard(baseBackendUrl + alias);
+    toast({
+      title: "Link copied to clipboard",
+      description: "You can now paste it anywhere",
+    });
+  };
 
   const columns = useMemo<ColumnDef<Url, any>[]>(
     () => [
@@ -23,14 +39,25 @@ export default function useColumnDef() {
         accessorKey: "alias",
         cell(props) {
           return (
-            <a
-              target="_blank"
-              className="flex items-center gap-0.5 text-blue-500 underline decoration-blue-300"
-              href={baseBackendUrl + props.getValue()}
-            >
-              {props.getValue()}
-              <ExternalLink size={20} />
-            </a>
+            <div className="flex w-full items-center justify-between">
+              <a
+                target="_blank"
+                className="flex items-center gap-0.5 text-blue-500 underline decoration-blue-300"
+                href={baseBackendUrl + props.getValue()}
+              >
+                {props.getValue()}
+                <ExternalLink size={20} />
+              </a>
+
+              <Button
+                size="icon"
+                variant="ghost"
+                aria-label="Copy link"
+                onClick={() => handleCopyLink(props.getValue())}
+              >
+                <ClipboardCopy />
+              </Button>
+            </div>
           );
         },
       },
